@@ -1,0 +1,31 @@
+---
+title: "Histogram"
+author: "Alexa Owen"
+date: "2023-06-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+```
+
+## R Markdown
+
+
+```{r cars}
+setwd ("/Users/alexaowen/Documents/Grad School/Summer 2023/Orientation")
+df0 <- read.csv("/Users/alexaowen/Downloads/2023-06-13-survey.csv")
+df0
+
+# Create a histogram with ggplot2
+histogram <- ggplot(data = df0, aes(x = RAM..in.GB.)) +
+  geom_histogram(binwidth = 4, fill = "steelblue" , color = "white") +
+  labs(title = "Histogram of RAM Storage (GB) ", x = "RAM (GB)", y = "Frequency") +
+  stat_bin(aes(y=..count.., label=after_stat(if_else (condition = count>0,
+                              as.character(count),
+                              ""))), geom="text", vjust= -.3, binwidth = 4) +
+  scale_x_continuous(limits = c(0, 68), breaks = seq(0, 68, by = 8))
+
+ggsave("Histogram.png", plot= histogram)
+```
+
